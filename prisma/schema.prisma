@@ -1,0 +1,35 @@
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      =  "file:./dev.db"
+
+}
+
+model Courses {
+id String @id @default(uuid())
+name String @unique
+description String?
+duration Int
+created_at DateTime @default(now())
+@@map("courses")
+}
+
+model Modules {
+ id String @id @default(uuid())
+ name String @unique
+ description String
+ created_at DateTime @default(now())
+ @@map("modules")
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  createdAt DateTime @default(now())
+}
