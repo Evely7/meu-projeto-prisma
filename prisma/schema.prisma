@@ -15,18 +15,49 @@ name String @unique
 description String?
 duration Int
 created_at DateTime @default(now())
+
+modules CoursesModules[]
+
 @@map("courses")
 }
+
 
 model Modules {
  id String @id @default(uuid())
  name String @unique
  description String
  created_at DateTime @default(now())
+
+  courses CoursesModules[]
+ 
  @@map("modules")
 }
 
-model User {
+model CoursesModules {
+  id String @id @default(uuid())
+
+  // chave estrangeira de Courses
+  course Courses @relation(fields: [fk_id_course], references: [id])
+  fk_id_course String
+
+  // chave estrangeira de Modules
+  module Modules @relation(fields: [fk_id_module], references: [id])
+  fk_id_module String
+
+  created_at DateTime @default(now())
+
+  @@map("courses_modules")
+}
+
+
+model Teachers {
+  id String @id @default(uuid())
+  name String @unique
+
+  @@map("teachers")
+}
+
+/*model User {
   id        Int      @id @default(autoincrement())
   name      String
   email     String   @unique
@@ -37,7 +68,7 @@ model Authors {
   id    String  @id @default(uuid())
   name  String  @unique
   books Books[]
-  @@map("authors")
+
 }
 
 model Books {
@@ -46,4 +77,4 @@ model Books {
   author_id String
   author    Authors @relation(fields: [author_id], references: [id])
   @@map("books")
-}
+}*/
